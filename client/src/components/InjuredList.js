@@ -3,23 +3,29 @@ import React, { useEffect, useState } from 'react';
 // Access the backend URL from environment variables
 const API_URL = process.env.REACT_APP_API_URL;
 
+// --- MODIFICATION: Added a placeholder for the Google Docs link ---
+// Replace this with your actual Google Docs form URL
+const GOOGLE_DOCS_URL = 'https://forms.gle/vak8SqGK3evSB7zc7';
+
 const InjuredList = ({ token }) => {
   const [injured, setInjured] = useState([]);
   const [pending, setPending] = useState([]);
+  
+  // --- MODIFICATION: State for the admin form, similar to Gallery.js ---
   const [name, setName] = useState('');
   const [details, setDetails] = useState('');
-  const [file, setFile] = useState(null);
+  const [pictureUrl, setPictureUrl] = useState(''); // Replaces the 'file' state
+  
   const isAdmin = Boolean(token);
 
   const fetchApproved = async () => {
-    // Use the full URL
     const res = await fetch(`${API_URL}/api/injured`);
     const data = await res.json();
     setInjured(data);
   };
+  
   const fetchPending = async () => {
     if (!isAdmin) return;
-    // Use the full URL
     const res = await fetch(`${API_URL}/api/injured/pending`, {
       headers: { 'x-auth-token': token }
     });
@@ -36,26 +42,32 @@ const InjuredList = ({ token }) => {
     })();
   }, [token]);
 
-  const handleSubmit = async (e) => {
+  // --- MODIFICATION: New handler for the admin form submission ---
+  // This works like the 'handleAdd' function in Gallery.js
+  const handleAdminSubmit = async (e) => {
     e.preventDefault();
-    const form = new FormData();
-    form.append('name', name);
-    form.append('details', details);
-    if (file) form.append('picture', file);
-    // Use the full URL
+    if (!name || !details || !pictureUrl) return; // Basic validation
+    
     await fetch(`${API_URL}/api/injured`, {
       method: 'POST',
-      body: form
+      headers: {
+        'Content-Type': 'application/json', // Sending JSON, not FormData
+        'x-auth-token': token
+      },
+      body: JSON.stringify({ name, details, picture_url: pictureUrl })
     });
+    
+    // Reset form fields
     setName('');
     setDetails('');
-    setFile(null);
-    e.target.reset(); // Reset file input
-    alert('Submission received. It will be shown after admin approval.');
+    setPictureUrl('');
+    
+    // Refresh lists
+    fetchApproved();
+    fetchPending();
   };
 
   const handleApprove = async (id) => {
-    // Use the full URL
     await fetch(`${API_URL}/api/injured/approve/${id}`, {
       method: 'PUT',
       headers: { 'x-auth-token': token }
@@ -67,18 +79,34 @@ const InjuredList = ({ token }) => {
   return (
     <div>
       <h2>Record of the Injured</h2>
-      <form onSubmit={handleSubmit} className="form-container">
-        <input type="text" placeholder="Full Name" value={name} onChange={(e) => setName(e.target.value)} required />
-        <textarea placeholder="Details (e.g., location, date, nature of injury)" value={details} onChange={(e) => setDetails(e.target.value)} required />
-        <label htmlFor="file-upload" style={{ display: 'block', marginBottom: '1rem', color: 'var(--secondary-text-color)' }}>
-            Upload a picture (optional but recommended)
-        </label>
-        <input type="file" id="file-upload" accept="image/*" onChange={(e) => setFile(e.target.files[0])} />
-        <button type="submit" className="btn">Submit for Approval</button>
-      </form>
+
+      {/* --- MODIFICATION: Conditional rendering for the submission section --- */}
+      {isAdmin ? (
+        // ADMIN VIEW: Form to add directly, like the gallery
+        <form onSubmit={handleAdminSubmit} className="form-container">
+          <h3>Add New Record (Admin)</h3>
+          <input type="text" placeholder="Full Name" value={name} onChange={(e) => setName(e.target.value)} required />
+          <textarea placeholder="Details (e.g., location, date, injury)" value={details} onChange={(e) => setDetails(e.target.value)} required />
+          <input type="url" placeholder="Direct image URL (https://...)" value={pictureUrl} onChange={(e) => setPictureUrl(e.target.value)} required />
+          <button type="submit" className="btn">Add Record</button>
+        </form>
+      ) : (
+        // PUBLIC VIEW: Button that links to Google Docs
+        <div className="form-container" style={{ textAlign: 'center' }}>
+            <p style={{ margin: '0 0 1rem', color: 'var(--secondary-text-color)' }}>
+                To add a record of an injured person, please submit the details through our official form.
+            </p>
+            <a href={GOOGLE_DOCS_URL} target="_blank" rel="noopener noreferrer" className="btn">
+                Submit a Record
+            </a>
+        </div>
+      )}
+
+      {/* The rest of the component remains the same */}
+      <hr />
 
       <h3>Approved Records</h3>
-      {injured.map((p) => (
+      {injured.length > 0 ? injured.map((p) => (
         <div className="card" key={p.id}>
           <div className="injured-card-content">
             {p.picture_url && <img src={p.picture_url} alt={p.name} />}
@@ -88,10 +116,12 @@ const InjuredList = ({ token }) => {
             </div>
           </div>
         </div>
-      ))}
+      )) : <p>No approved records to display.</p>}
+
 
       {isAdmin && (
         <>
+          <hr />
           <h3>Pending Approval</h3>
           {pending.length > 0 ? pending.map((p) => (
             <div className="card" key={p.id}>
