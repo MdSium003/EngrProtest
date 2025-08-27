@@ -34,6 +34,7 @@ nav button {
   max-width: 1100px;
   margin: 0 auto;
   padding: 16px;
+  justify-content: center;
 }
 
 /* ----- CARDS ----- */
@@ -110,3 +111,24 @@ a:hover { color: #7f1d1d; }
   width: 100%;
   position: absolute;
 }
+
+.card2 iframe {
+  max-width: 80%;
+}
+/* Add this to your index.css file */
+
+.posts-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  justify-items: center;  /* centers items inside each grid cell */
+
+}
+
+/* Make it a single column on smaller screens */
+@media (max-width: 768px) {
+  .posts-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
