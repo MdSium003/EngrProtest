@@ -12,7 +12,7 @@ const FacebookPosts = ({ token }) => {
   const fetchApproved = async () => {
     try {
       // Use the full URL
-      const res = await fetch(`${API_URL}/api/posts`);
+      const res = await fetch(`${API__URL}/api/posts`);
       const data = await res.json();
       setPosts(data);
     } catch (error) {
@@ -64,17 +64,20 @@ const FacebookPosts = ({ token }) => {
     await fetchPending();
   };
 
-  // ... rest of your component remains the same
+  // --- MODIFICATION START ---
+  // This function is updated to better handle different Facebook URL formats.
   const renderPost = (post) => {
     const encodedLink = encodeURIComponent(post.facebook_link);
-    const iframeSrc = `https://www.facebook.com/plugins/post.php?href=${encodedLink}&show_text=true&width=500`;
+    // Using 'width=auto' makes the embed plugin more flexible and can help
+    // it correctly render posts from newer 'share' URLs.
+    const iframeSrc = `https://www.facebook.com/plugins/post.php?href=${encodedLink}&show_text=true&width=auto`;
 
     return (
       <iframe
         src={iframeSrc}
         width="500"
         height="660"
-        style={{ border: 'none', overflow: 'hidden' }}
+        style={{ border: 'none', overflow: 'hidden', maxWidth: '100%' }} // Ensures responsiveness
         scrolling="no"
         frameBorder="0"
         allowFullScreen="true"
@@ -83,6 +86,8 @@ const FacebookPosts = ({ token }) => {
       ></iframe>
     );
   };
+  // --- MODIFICATION END ---
+
 
   return (
     <>
