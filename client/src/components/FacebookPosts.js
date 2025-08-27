@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
+// Access the backend URL from environment variables
+const API_URL = process.env.REACT_APP_API_URL;
+
 const FacebookPosts = ({ token }) => {
   const [posts, setPosts] = useState([]);
   const [pending, setPending] = useState([]);
@@ -8,7 +11,8 @@ const FacebookPosts = ({ token }) => {
 
   const fetchApproved = async () => {
     try {
-      const res = await fetch('/api/posts');
+      // Use the full URL
+      const res = await fetch(`${API_URL}/api/posts`);
       const data = await res.json();
       setPosts(data);
     } catch (error) {
@@ -19,7 +23,8 @@ const FacebookPosts = ({ token }) => {
   const fetchPending = async () => {
     if (!isAdmin) return;
     try {
-      const res = await fetch('/api/posts/pending', {
+      // Use the full URL
+      const res = await fetch(`${API_URL}/api/posts/pending`, {
         headers: { 'x-auth-token': token }
       });
       const data = await res.json();
@@ -39,7 +44,8 @@ const FacebookPosts = ({ token }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!link) return;
-    await fetch('/api/posts', {
+    // Use the full URL
+    await fetch(`${API_URL}/api/posts`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ facebook_link: link })
@@ -49,7 +55,8 @@ const FacebookPosts = ({ token }) => {
   };
 
   const handleApprove = async (id) => {
-    await fetch(`/api/posts/approve/${id}`, {
+    // Use the full URL
+    await fetch(`${API_URL}/api/posts/approve/${id}`, {
       method: 'PUT',
       headers: { 'x-auth-token': token }
     });
@@ -57,7 +64,7 @@ const FacebookPosts = ({ token }) => {
     await fetchPending();
   };
 
-  // Helper function to create the iframe for a post
+  // ... rest of your component remains the same
   const renderPost = (post) => {
     const encodedLink = encodeURIComponent(post.facebook_link);
     const iframeSrc = `https://www.facebook.com/plugins/post.php?href=${encodedLink}&show_text=true&width=500`;
