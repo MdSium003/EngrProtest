@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
+// Access the backend URL from environment variables
+const API_URL = process.env.REACT_APP_API_URL;
+
 const InjuredList = ({ token }) => {
   const [injured, setInjured] = useState([]);
   const [pending, setPending] = useState([]);
@@ -9,13 +12,15 @@ const InjuredList = ({ token }) => {
   const isAdmin = Boolean(token);
 
   const fetchApproved = async () => {
-    const res = await fetch('/api/injured');
+    // Use the full URL
+    const res = await fetch(`${API_URL}/api/injured`);
     const data = await res.json();
     setInjured(data);
   };
   const fetchPending = async () => {
     if (!isAdmin) return;
-    const res = await fetch('/api/injured/pending', {
+    // Use the full URL
+    const res = await fetch(`${API_URL}/api/injured/pending`, {
       headers: { 'x-auth-token': token }
     });
     const data = await res.json();
@@ -37,7 +42,8 @@ const InjuredList = ({ token }) => {
     form.append('name', name);
     form.append('details', details);
     if (file) form.append('picture', file);
-    await fetch('/api/injured', {
+    // Use the full URL
+    await fetch(`${API_URL}/api/injured`, {
       method: 'POST',
       body: form
     });
@@ -49,7 +55,8 @@ const InjuredList = ({ token }) => {
   };
 
   const handleApprove = async (id) => {
-    await fetch(`/api/injured/approve/${id}`, {
+    // Use the full URL
+    await fetch(`${API_URL}/api/injured/approve/${id}`, {
       method: 'PUT',
       headers: { 'x-auth-token': token }
     });

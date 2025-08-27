@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
+// Access the backend URL from environment variables
+const API_URL = process.env.REACT_APP_API_URL;
+
 const Gallery = ({ token }) => {
   const [images, setImages] = useState([]);
   const [imageUrl, setImageUrl] = useState('');
@@ -7,7 +10,8 @@ const Gallery = ({ token }) => {
   const isAdmin = Boolean(token);
 
   const fetchImages = async () => {
-    const res = await fetch('/api/images');
+    // Use the full URL
+    const res = await fetch(`${API_URL}/api/images`);
     const data = await res.json();
     setImages(data);
   };
@@ -19,7 +23,8 @@ const Gallery = ({ token }) => {
   const handleAdd = async (e) => {
     e.preventDefault();
     if (!imageUrl) return;
-    await fetch('/api/images', {
+    // Use the full URL
+    await fetch(`${API_URL}/api/images`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

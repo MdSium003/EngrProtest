@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
+// Access the backend URL from environment variables
+const API_URL = process.env.REACT_APP_API_URL;
+
 const Videos = ({ token }) => {
   const [videos, setVideos] = useState([]);
   const [videoUrl, setVideoUrl] = useState('');
@@ -29,7 +32,8 @@ const Videos = ({ token }) => {
   };
 
   const fetchVideos = async () => {
-    const res = await fetch('/api/videos');
+    // Use the full URL
+    const res = await fetch(`${API_URL}/api/videos`);
     const data = await res.json();
     setVideos(data);
   };
@@ -40,7 +44,8 @@ const Videos = ({ token }) => {
 
   const handleAdd = async (e) => {
     e.preventDefault();
-    await fetch('/api/videos', {
+    // Use the full URL
+    await fetch(`${API_URL}/api/videos`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

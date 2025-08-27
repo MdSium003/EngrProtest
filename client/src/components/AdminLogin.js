@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 
+// Access the backend URL from environment variables
+const API_URL = process.env.REACT_APP_API_URL;
+
 const AdminLogin = ({ setToken }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -9,7 +12,8 @@ const AdminLogin = ({ setToken }) => {
     e.preventDefault();
     setError('');
     try {
-      const res = await fetch('/api/admin/login', {
+      // Use the full URL
+      const res = await fetch(`${API_URL}/api/admin/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password })

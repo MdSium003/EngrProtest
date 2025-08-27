@@ -118,12 +118,12 @@ a:hover { color: #7f1d1d; }
 /* Add this to your index.css file */
 
 .posts-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;  /* centers all posts horizontally */
   gap: 16px;
-  justify-items: center;  /* centers items inside each grid cell */
-
 }
+
 
 /* Make it a single column on smaller screens */
 @media (max-width: 768px) {
