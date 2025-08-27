@@ -1,0 +1,112 @@
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  background: #ffffff; /* white */
+  color: #111827; /* near-black text */
+}
+
+/* ----- NAVBAR ----- */
+nav {
+  display: flex;
+  gap: 12px;
+  padding: 12px 16px;
+  background: #8B0000; /* dark crimson */
+  border-bottom: 3px solid #5a0000; /* darker edge */
+}
+nav a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 600;
+}
+nav a:hover {
+  color: #ffe4e6; /* very light pink */
+}
+nav button {
+  margin-left: auto;
+  background: #ffffff;
+  color: #8B0000;
+  border: 2px solid #8B0000;
+  border-radius: 6px;
+}
+
+/* ----- LAYOUT ----- */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+/* ----- CARDS ----- */
+.card {
+  background: #ffffff;
+  border: 2px solid #fca5a5; /* light red border */
+  border-radius: 8px;
+  padding: 12px;
+  margin: 12px 0;
+  box-shadow: 0 1px 2px rgba(139, 0, 0, 0.08);
+}
+
+/* ----- FORM CONTROLS ----- */
+input, textarea, button {
+  padding: 10px 12px;
+  margin: 6px 8px 6px 0;
+  border-radius: 6px;
+  outline: none;
+}
+input, textarea {
+  background: #ffffff;
+  color: #111827;
+  border: 2px solid #e5e7eb;
+}
+input:focus, textarea:focus {
+  border-color: #8B0000;
+  box-shadow: 0 0 0 3px rgba(139, 0, 0, 0.15);
+}
+button {
+  background: #b91c1c; /* red-700 */
+  border: 2px solid #b91c1c;
+  color: #ffffff;
+  cursor: pointer;
+}
+button:hover {
+  background: #991b1b; /* darker red */
+  border-color: #991b1b;
+}
+
+/* ----- LINKS ----- */
+a { color: #b91c1c; }
+a:hover { color: #7f1d1d; }
+
+/* ----- GALLERY GRID ----- */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.gallery-item {
+  margin: 0; /* card already has spacing via grid gap */
+}
+@media (max-width: 992px) {
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 640px) {
+  .gallery-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.video-responsive {
+  overflow: hidden;
+  padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+  position: relative;
+  height: 0;
+}
+
+.video-responsive iframe {
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}

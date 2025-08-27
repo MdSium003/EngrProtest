@@ -1,0 +1,281 @@
+/* Import a clean, readable font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+
+/* Define color variables for easy theme management. */
+:root {
+  --background-color: #fafafa;
+  --surface-color: #ffffff;
+  --primary-text-color: #333333;
+  --secondary-text-color: #6c757d;
+  --accent-color: #9a2a2a;
+  --accent-hover-color: #b03030;
+  --border-color: #e0e0e0;
+}
+
+/* General Body Styles */
+body {
+  margin: 0;
+  font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background-color);
+  color: var(--primary-text-color);
+}
+
+/* App Layout */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* --- NAVBAR STYLES UPDATED --- */
+nav.navbar {
+  padding: 0.8rem 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  background-image: url('./hero.jpg');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Style for the brand name and logo on the left */
+.navbar-brand {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+  /* Use flexbox to align logo and text */
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.navbar-logo {
+  height: 45px; /* Adjust size as needed */
+  width: 45px;
+}
+
+/* Container for the links on the right */
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 2rem; 
+}
+
+nav.navbar a, nav.navbar button {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 400;
+  padding: 0.5rem 0;
+  border-bottom: 2px solid transparent;
+  transition: all 0.3s ease;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+nav.navbar a:hover, nav.navbar button:hover {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+nav.navbar a.active {
+  color: #ffffff;
+  border-bottom: 2px solid #ffffff;
+  font-weight: 700;
+}
+/* --- END OF NAVBAR UPDATES --- */
+
+
+/* Logout Button */
+.logout-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Main Content Container */
+.main-content {
+  max-width: 960px;
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+h2, h3 {
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+  font-weight: 300;
+  letter-spacing: 0.5px;
+}
+
+/* Form Styles */
+.form-container {
+  background-color: var(--surface-color);
+  padding: 2rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  border: 1px solid var(--border-color);
+}
+
+.form-container input[type="text"],
+.form-container input[type="url"],
+.form-container input[type="password"],
+.form-container textarea {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid var(--border-color);
+  background-color: #f7f7f7;
+  color: var(--primary-text-color);
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-container input:focus, .form-container textarea:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px rgba(154, 42, 42, 0.2);
+}
+
+.form-container textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.form-container input[type="file"] {
+    margin-bottom: 1rem;
+}
+
+/* Button Styles */
+.btn {
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 700;
+  transition: background-color 0.3s ease;
+  background-color: var(--accent-color);
+  color: white;
+}
+
+.btn:hover {
+  background-color: var(--accent-hover-color);
+}
+
+/* Card Styles for Posts, Injured List, etc. */
+.card {
+  background-color: var(--surface-color);
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--border-color);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.card a {
+  color: var(--accent-color);
+  text-decoration: none;
+  word-break: break-all;
+}
+
+.card a:hover {
+  text-decoration: underline;
+}
+
+/* Injured List Specific Card */
+.injured-card-content {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.injured-card-content img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+.injured-card-content strong {
+  display: block;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.injured-card-content p {
+  color: var(--secondary-text-color);
+  margin: 0;
+}
+
+/* Admin controls inside cards */
+.admin-actions {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+  text-align: right;
+}
+
+/* Gallery Styles */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 6px;
+  display: block;
+}
+
+.gallery-item p {
+    margin-top: 0.8rem;
+    color: var(--secondary-text-color);
+}
+
+/* Error Message Style */
+.error-message {
+    color: #c0392b; 
+    margin-top: 1rem;
+    text-align: center;
+}
+
+/* --- FOOTER STYLES UPDATED --- */
+.site-footer {
+  padding: 1.5rem 2rem;
+  background-image: url('./hero.jpg');
+  background-size: cover;
+  background-position: center;
+  color: #ffffff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto; 
+}
+
+.footer-left {
+  font-weight: 700;
+}
+
+.footer-right {
+  font-size: 0.8rem;
+  opacity: 0.9;
+}
