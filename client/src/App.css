@@ -41,6 +41,7 @@ nav.navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap; /* Allow items to wrap on smaller screens */
 }
 
 /* Style for the brand name and logo on the left */
@@ -186,6 +187,12 @@ h2, h3 {
     box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
+/* --- MODIFICATION: Added rule to make iframes responsive --- */
+.card iframe {
+  max-width: 100%; /* Ensures iframe does not overflow its container */
+}
+
+
 .card a {
   color: var(--accent-color);
   text-decoration: none;
@@ -209,6 +216,7 @@ h2, h3 {
   object-fit: cover;
   border-radius: 8px;
   border: 1px solid var(--border-color);
+  flex-shrink: 0; /* Prevents image from shrinking */
 }
 
 .injured-card-content strong {
@@ -269,6 +277,7 @@ h2, h3 {
   justify-content: space-between;
   align-items: center;
   margin-top: auto; 
+  flex-wrap: wrap; /* Allow items to wrap */
 }
 
 .footer-left {
@@ -278,4 +287,65 @@ h2, h3 {
 .footer-right {
   font-size: 0.8rem;
   opacity: 0.9;
+}
+
+
+/*
+=================================================================
+--- RESPONSIVE STYLES ---
+This section makes the website adapt to smaller screens like tablets and phones.
+The breakpoint is set at 768px.
+=================================================================
+*/
+
+@media (max-width: 768px) {
+  
+  /* --- NAVBAR --- */
+  nav.navbar {
+    flex-direction: column; /* Stack brand and links vertically */
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .navbar-right {
+    flex-direction: column; /* Stack nav links vertically */
+    gap: 0.5rem;
+    align-items: center; /* Center the links */
+  }
+
+  /* --- MAIN CONTENT --- */
+  .main-content {
+    margin: 1rem auto; /* Reduce top/bottom margin */
+    padding: 0 1rem; /* Reduce side padding */
+  }
+  
+  .form-container {
+      padding: 1.5rem;
+  }
+
+  /* --- INJURED LIST CARD --- */
+  .injured-card-content {
+    flex-direction: column; /* Stack image and text vertically */
+    align-items: flex-start; /* Align to the left */
+    text-align: left;
+    gap: 1rem;
+  }
+  
+  .injured-card-content img {
+    width: 100%; /* Make image fill the card width */
+    height: 200px; /* Adjust height for a better look */
+  }
+
+  /* --- FOOTER --- */
+  .site-footer {
+    flex-direction: column; /* Stack footer content vertically */
+    gap: 0.8rem;
+    text-align: center;
+  }
+
+  /* --- GALLERY GRID --- */
+  .gallery-grid {
+    /* The gallery is already responsive thanks to auto-fill, but we can reduce the gap */
+    gap: 1rem;
+  }
 }
